@@ -3,6 +3,7 @@ package hello.springmvc.basic.request;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -68,8 +69,8 @@ public class RequestParamController {
     @ResponseBody
     @RequestMapping("/request-param-default")
     public String requestParamDefault(
-            @RequestParam(required = true,defaultValue = "guest") String username,
-            @RequestParam(required = false,defaultValue = "-1") int age) {
+            @RequestParam(required = true, defaultValue = "guest") String username,
+            @RequestParam(required = false, defaultValue = "-1") int age) {
         log.info("username = {}, age = {}", username, age);
 
         return "ok";
@@ -78,11 +79,23 @@ public class RequestParamController {
     @ResponseBody
     @RequestMapping("/request-param-map")
     public String requestParamMap(
-            @RequestParam Map<String,Object> paraMap) {
+            @RequestParam Map<String, Object> paraMap) {
         log.info("username = {}, age = {}", paraMap.get("username"), paraMap.get("age"));
 
         return "ok";
     }
 
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttributeV1(@ModelAttribute HelloData helloData) {
+        log.info("helloData = {}", helloData);
+        return "ok";
+    }
 
+    @ResponseBody
+    @RequestMapping("/model-attribute-v2")
+    public String modelAttributeV2(HelloData helloData) {
+        log.info("helloData = {}", helloData);
+        return "ok";
+    }
 }
